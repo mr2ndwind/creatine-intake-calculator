@@ -45,8 +45,15 @@
 
 <div class="container">
     <h2>Creatine Intake Calculator</h2>
-    <label for="weight">Enter Weight (kg):</label>
-    <input type="number" id="weight" placeholder="Enter weight in kg" required>
+    
+    <label for="weight">Enter Weight:</label>
+    <input type="number" id="weight" placeholder="Enter weight" required>
+    
+    <label for="unit">Select Unit:</label>
+    <select id="unit">
+        <option value="kg">Kilograms (kg)</option>
+        <option value="lbs">Pounds (lbs)</option>
+    </select>
     
     <label for="gender">Select Gender:</label>
     <select id="gender">
@@ -62,28 +69,25 @@
 <script>
     function calculateCreatine() {
         let weight = parseFloat(document.getElementById("weight").value);
+        let unit = document.getElementById("unit").value; // Get selected unit
         let gender = document.getElementById("gender").value;
-        
+
         if (isNaN(weight) || weight <= 0) {
             document.getElementById("result").innerHTML = "Please enter a valid weight.";
             return;
         }
 
-        let loadingFactor = 0.3;
-        let maintenanceFactor = 0.03;
+        // Convert weight to pounds if user selects kg
+        let weightLbs = unit === "kg" ? weight * 2.20462 : weight;
 
-        if (gender === "female") {
-            loadingFactor *= 0.9;
-            maintenanceFactor *= 0.9;
-        }
-
-        let loading = (weight * loadingFactor).toFixed(2);
-        let maintenance = (weight * maintenanceFactor).toFixed(2);
+        // Creatine intake recommendations (based on weight in lbs)
+        let loadingPhase = (weightLbs * 0.14).toFixed(2); // 0.14g per lb for loading
+        let maintenancePhase = "5-8"; // Fixed range for maintenance
 
         document.getElementById("result").innerHTML = `
-            <p>Creatine Intake:</p>
-            <p><strong>Loading Phase:</strong> ${loading}g/day</p>
-            <p><strong>Maintenance Phase:</strong> ${maintenance}g/day</p>
+            <p>Creatine Intake (Supplement Only):</p>
+            <p><strong>Loading Phase (5-7 days):</strong> ${loadingPhase}g/day</p>
+            <p><strong>Maintenance Phase:</strong> ${maintenancePhase}g/day</p>
         `;
     }
 </script>
