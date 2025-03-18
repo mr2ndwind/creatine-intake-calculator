@@ -80,9 +80,9 @@
         // Convert weight to pounds if user selects kg
         let weightLbs = unit === "kg" ? weight * 2.20462 : weight;
 
-        // Creatine intake recommendations (based on weight in lbs)
+        // Updated creatine intake values based on weight
         let loadingPhase = (weightLbs * 0.14).toFixed(2); // 0.14g per lb for loading
-        let maintenancePhase = "5-8"; // Fixed range for maintenance
+        let maintenancePhase = (weightLbs * 0.014).toFixed(2); // 0.014g per lb for maintenance
 
         document.getElementById("result").innerHTML = `
             <p>Creatine Intake (Supplement Only):</p>
